@@ -5,6 +5,7 @@
 
 
 (facts "About `in2out->>"
-       (in2out->> "dev-resources/txt.txt" 
-           (map read-string) (map #(* 10 %)) (reduce +)) => 6
+       (with-out-str (doall (in2out->> "dev-resources/txt.txt" 
+                                       (map read-string) (map #(* 10 %)) (reduce +))))
+       => "60\n"
        )
