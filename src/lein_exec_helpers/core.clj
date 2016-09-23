@@ -8,13 +8,13 @@
   [in out & forms]
   `(with-open [rdr# (reader ~in)]
     (if-not (string? ~out)
-      (let [res# (->> (line-seq rdr#) ~out ~@forms)]
+      (let [res# (->> rdr# ~out ~@forms)]
         (if (sequential? res#)
           (doseq [line# res#]
             (println line#))
           (println res#)))
       (with-open [wtr# (writer ~out)]
-        (let [res# (->> (line-seq rdr#) ~@forms)]
+        (let [res# (->> rdr# ~@forms)]
           (if (sequential? res#)
             (doseq [line# res#]
               (.write wtr# (str line# "\n")))
