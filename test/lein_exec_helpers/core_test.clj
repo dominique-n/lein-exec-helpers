@@ -9,6 +9,10 @@
                                        (map read-string) (map #(* 10 %)) (reduce +))))
        => "60\n"
 
+       (with-out-str (doall (in2out->> "dev-resources/txt.txt" 
+                                       (map read-string) (map #(* 10 %)))))
+       => "10\n20\n30\n"
+
        )
 
 
@@ -18,6 +22,13 @@
   (let [out "dev-resources/res.txt"]
     (facts "About `in2out->>"
            (do 
-             (with-out-str (doall (in2out->> "dev-resources/txt.txt" out
-                                             (map read-string) (map #(* 10 %)) (reduce +))))
-             (slurp out) => "60\n"))))
+             (with-out-str 
+               (in2out->> "dev-resources/txt.txt" out
+                          (map read-string) (map #(* 10 %)) (reduce +)))
+             (slurp out) => "60\n")
+           (do 
+             (with-out-str 
+               (in2out->> "dev-resources/txt.txt" out
+                          (map read-string) (map #(* 10 %))))
+             (slurp out) => "10\n20\n30\n")
+           )))
