@@ -6,7 +6,7 @@
 (defn print-case 
   ([output] (print-case nil output))
   ([wtr output]
-   (let [f (if wtr (partial #(fn [output] (.write % output)) wtr) println)]
+   (let [f (if wtr #(.write wtr %) println)]
      (if (sequential? output)
        (doseq [line output]
          (f line))
@@ -16,14 +16,6 @@
   [in out & forms]
   `(with-open [rdr# (reader ~in)]
      (if-not (string? ~out)
-       (let [res# (->> rdr# ~out ~@forms)]
-         (if (sequential? res#)
-           (doseq [line# res#]
-             (println line#))
-           (println res#)))
+       (print-case (->> rdr# ~out ~@forms))
        (with-open [wtr# (writer ~out)]
-         (let [res# (->> rdr# ~@forms)]
-           (if (sequential? res#)
-             (doseq [line# res#]
-               (.write wtr# (str line# "\n")))
-             (.write wtr# (str res# "\n"))))))))
+         (print-case wtr# (->> rdr# ~@forms))))))
