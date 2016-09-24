@@ -16,9 +16,9 @@
   (facts "About `print-case to file"
                 (do (with-open [wtr (writer out)]
                       (print-case wtr "60"))
-                      (slurp out)) => "60"
+                      (slurp out)) => "60\n"
                 (do (with-open [wtr (writer out)]
-                      (print-case wtr ["10\n" "20\n" "30\n"]))
+                      (print-case wtr ["10" "20" "30"]))
                       (slurp out)) => "10\n20\n30\n"
                 ))
 
@@ -42,9 +42,9 @@
    (after :checks (clojure.java.io/delete-file out))]
     (facts "About `in2out->> to file"
            (do (in2out->> in out line-seq
-                          (map read-string) (map #(* 10 %)) (reduce +) str)
-               (slurp out)) => "60"
+                          (map read-string) (map #(* 10 %)) (reduce +))
+               (slurp out)) => "60\n"
            (do (in2out->> in out line-seq
-                          (map read-string) (map #(* 10 %)) (map #(str % "\n")))
+                          (map read-string) (map #(* 10 %)))
                (slurp out)) => "10\n20\n30\n"
            ))

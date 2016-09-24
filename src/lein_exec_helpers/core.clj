@@ -6,7 +6,7 @@
 (defn print-case 
   ([output] (print-case nil output))
   ([wtr output]
-   (let [f (if wtr #(.write wtr %) println)]
+   (let [f (if wtr #(.write wtr (str % "\n")) println)]
      (if (sequential? output)
        (doseq [line output]
          (f line))
