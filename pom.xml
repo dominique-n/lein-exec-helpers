@@ -9,7 +9,7 @@
   <scm>
     <connection>scm:git:git://github.com/dominique-n/lein-exec-helpers.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/dominique-n/lein-exec-helpers.git</developerConnection>
-    <tag>3e98b9b2cbb0929ae58e671b4bca3929a6dedfb9
+    <tag>e3cd143bfe93176b8ac780b3078e40b6a4492e4d
 </tag>
     <url>https://github.com/dominique-n/lein-exec-helpers</url>
   </scm>
